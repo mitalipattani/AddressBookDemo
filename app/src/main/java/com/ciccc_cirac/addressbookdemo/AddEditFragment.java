@@ -1,13 +1,15 @@
 package com.ciccc_cirac.addressbookdemo;
 
-import android.app.Fragment;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 
 import com.ciccc_cirac.addressbookdemo.data.DatabaseDescription;
 
@@ -33,6 +36,8 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     private Uri contactUri;
     //contactUri value will come from MainActivity
 
+
+
     //EditText for contact
 
     private TextInputLayout nameTextInput;
@@ -47,9 +52,9 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     //create a View for Fragment
 
 
-    @Nullable
+   
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
        //inflate the GUI and get the reference for EditTExxt
         View view = inflater.inflate(
