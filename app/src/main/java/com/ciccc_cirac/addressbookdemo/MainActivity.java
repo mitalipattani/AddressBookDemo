@@ -8,13 +8,22 @@ import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity
 {
+    private ContactsFragment contactsFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        displayAddEditFragment(R.id.fragmentContainer ,null );
+        contactsFragment  = new ContactsFragment();
+        //add the fragment into framelayout
+        //use Fragment Transaction
+        FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager()
+                        .beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer,contactsFragment );
+        fragmentTransaction.commit();
+      //  displayAddEditFragment(R.id.fragmentContainer ,null );
     }
     // display fragment for adding a new or editing an existing contact
     // ViewID is layout id & it should be the container
