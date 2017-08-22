@@ -1,0 +1,73 @@
+public class ContactAdapter extends RecyclerView.Adapter<?>{
+
+//1. create a inner class a view for each row of recyclerview
+// nested subclass of RecyclerView.ViewHolder used to implement
+// the view-holder pattern in the context of a RecyclerView
+
+public class ContactViewHolder extends RecyclerView.ViewHolder{
+    //Create a TExtView Object
+    //create  a iD of datatype long
+ 
+
+    // configures a RecyclerView item's ViewHolder
+    public ContactViewHolder(View itemView) {
+      
+    }
+
+    // set the database row ID for the contact in this ViewHolder
+    public void setRowID(long rowID)
+    {
+    }
+}
+
+// sets up new list item and its ViewHolder
+@Override
+public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    // create  a simple list item
+    // inflate the android.R.layout.simple_list_item_1 layout
+View view = LayoutInflater.from();
+return new ContactViewHolder(view);  // return current item's ViewHolder
+
+}
+
+// sets the text of the list item to display the search tag
+public void onBindViewHolder(ContactViewHolder holder, int position) {
+cursor.moveToPosition(position);
+holder.tvContact.setText(cursor.getString(cursor.getColumnIndex(DatabaseDescription.Contact.COLUMN_NAME)));
+holder.setRowID(cursor.getLong(cursor.getColumnIndex(DatabaseDescription.Contact._ID)));
+}
+
+// returns the number of items that adapter binds
+@Override
+public int getItemCount() {
+    //use getcount methods of cursor object & it retuns no. of rows inc cursor
+    return rows;
+}
+
+Create a new class public class ContactsFragment extends Fragment{
+// create an instance of contactadapter for recyclerView
+
+@Nullable
+@Override
+public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    super.onCreateView(inflater, container, savedInstanceState);
+setHasOptionsMenu(true); // fragment has menu items to display
+// inflate GUI and get reference to the RecyclerView
+View view = inflater.inflate(
+        R.layout.fragment_contacts,container,false
+);
+RecyclerView recyclerView =(RecyclerView)view.findViewById(R.id.recyclerView);
+
+// recyclerView should display items in a vertical list
+// use LinearLayoutManager
+//set the adapter to recyclerview
+// attach a custom ItemDecorator to draw dividers between list items
+
+// improves performance if RecyclerView's layout size never changes
+recyclerView.setHasFixedSize(true);
+
+// get the FloatingActionButton
+FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.addButton);
+return view;
+
+}
