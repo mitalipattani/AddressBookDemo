@@ -42,6 +42,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>
                         getActivity().getBaseContext()
                 ));
         //set Adapter
+        contactAdapter =  new ContactAdapter();
         recyclerView.setAdapter(contactAdapter);
         recyclerView.addItemDecoration(new
                 ItemDivider(getContext()));
@@ -79,11 +80,11 @@ implements LoaderManager.LoaderCallbacks<Cursor>
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        //keep empty now
+       contactAdapter.notifyChange(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-//keep empty now
+        contactAdapter.notifyChange(null);
     }
 }
