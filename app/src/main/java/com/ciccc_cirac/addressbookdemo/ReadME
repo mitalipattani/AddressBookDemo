@@ -1,0 +1,20 @@
+Suggeste Reading
+Loader
+https://developer.android.com/guide/components/loaders.html
+
+Using the LoaderManager Callbacks
+LoaderManager.LoaderCallbacks is a callback interface that lets a client interact with the LoaderManager.
+
+Loaders, in particular CursorLoader, are expected to retain their data after being stopped. This allows applications to keep their data across the activity or fragment's onStop() and onStart() methods, so that when users return to an application, they don't have to wait for the data to reload. You use the LoaderManager.LoaderCallbacks methods when to know when to create a new loader, and to tell the application when it is time to stop using a loader's data.
+
+LoaderManager.LoaderCallbacks includes these methods:
+onCreateLoader() — Instantiate and return a new Loader for the given ID.
+onLoadFinished() — Called when a previously created loader has finished its load.
+onLoaderReset() — Called when a previously created loader is being reset, thus making its data unavailable.
+
+
+TextInputLayout
+https://developer.android.com/reference/android/support/design/widget/TextInputLayout.html
+A TextInputLayout widget behaves exactly as a LinearLayout does, it’s just a wrapper. TextInputLayout only accepts one child element, similar to a ScrollView. The child element needs to be an EditText element.
+While the EditText alone will hide the hint after the first character is typed, when wrapped in a TextInputLayout the hint will become a floating label above the EditText. A nice material animation is included too.
+Another nice feature of TextInputLayout is the way it can handle errors. By validating the input, you prevent users from misspelling their email address or entering a password that is too short.
