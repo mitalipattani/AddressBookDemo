@@ -15,3 +15,6 @@ onLoaderReset() — Called when a previously created loader is being reset, thus
 
 TextInputLayout
 https://developer.android.com/reference/android/support/design/widget/TextInputLayout.html
+A TextInputLayout widget behaves exactly as a LinearLayout does, it’s just a wrapper. TextInputLayout only accepts one child element, similar to a ScrollView. The child element needs to be an EditText element.
+While the EditText alone will hide the hint after the first character is typed, when wrapped in a TextInputLayout the hint will become a floating label above the EditText. A nice material animation is included too.
+Another nice feature of TextInputLayout is the way it can handle errors. By validating the input, you prevent users from misspelling their email address or entering a password that is too short.
