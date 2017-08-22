@@ -16,6 +16,12 @@ import com.ciccc_cirac.addressbookdemo.data.DatabaseDescription;
 public class ContactAdapter extends
 RecyclerView.Adapter<ContactAdapter.ContactViewHolder>{
     private Cursor cursor = null;
+    //this takes data from loader from contactfragment
+    public void notifyChange(Cursor cursor)
+    {
+        this.cursor = cursor;
+        notifyDataSetChanged();
+    }
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,7 +51,12 @@ RecyclerView.Adapter<ContactAdapter.ContactViewHolder>{
     //returns total no of rows
     @Override
     public int getItemCount() {
-        return cursor.getCount();
+        int count = 0;
+        if(cursor!=null)
+        {
+            count = cursor.getCount();
+        }
+        return count;
     }
 
 
