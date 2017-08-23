@@ -11,8 +11,10 @@ public class MainActivity extends AppCompatActivity
         AddEditFragment.AddEditFragmentInterface
 {
     private ContactsFragment contactsFragment;
+    public static final String CONTACT_URI = "contact_uri";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -47,10 +49,34 @@ public class MainActivity extends AppCompatActivity
     public void onAddContact() {
         displayAddEditFragment(R.id.fragmentContainer,null);
     }
+    //display DetailFragment for selected Contact
+    @Override
+    public void onContactSelected(Uri uri) {
+        DetailFragment detailFragment = new DetailFragment();
+
+
+        //use FragmentTranscation
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                .beginTransaction();
+        transaction.replace(R.id.fragmentContainer,
+                detailFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        //create a bundle object that will pass selected
+        // row uri to detailFragment
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CONTACT_URI,uri);
+        detailFragment.setArguments(bundle);
+    }
 
     @Override
     public void onAddEditComplete(Uri uri) {
         getSupportFragmentManager()
                 .popBackStack();
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.ciccc_cirac.addressbookdemo;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -22,13 +23,22 @@ import com.ciccc_cirac.addressbookdemo.data.DatabaseDescription;
  */
 
 public class ContactsFragment extends Fragment
-implements LoaderManager.LoaderCallbacks<Cursor>
+implements  LoaderManager.LoaderCallbacks<Cursor>
 {
+
+//from here you should goto MainActivity and load
+    //detailFragment with selected ID
+//    @Override
+//    public void onClick(Uri uri) {
+//        contactFragmentInterface.onContactSelected(uri);
+//    }
+
     //interface .: have only methods no implementation
     //Class implementing interface will have code
     public interface ContactFragmentInterface
     {
         void onAddContact();
+        void onContactSelected(Uri uri);
     }
     private ContactAdapter contactAdapter;
     private int contact_loader =0;
@@ -51,7 +61,12 @@ implements LoaderManager.LoaderCallbacks<Cursor>
                         getActivity().getBaseContext()
                 ));
         //set Adapter
-        contactAdapter =  new ContactAdapter();
+        contactAdapter =  new ContactAdapter(new ContactAdapter.ContactAdapterInterface() {
+            @Override
+            public void onClick(Uri uri) {
+                contactFragmentInterface.onContactSelected(uri);
+            }
+        });
         recyclerView.setAdapter(contactAdapter);
         recyclerView.addItemDecoration(new
                 ItemDivider(getContext()));
