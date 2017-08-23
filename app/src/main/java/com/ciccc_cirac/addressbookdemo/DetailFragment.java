@@ -78,23 +78,7 @@ public class DetailFragment extends Fragment
 
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_details_menu, menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId())
-        {
-            case R.id.action_edit:
-                return true;
-            case R.id.action_delete:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     //this method is called by Lodermanager to create a loader
     @Override
