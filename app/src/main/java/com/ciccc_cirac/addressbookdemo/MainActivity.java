@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity
     implements ContactsFragment.ContactFragmentInterface,
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity
         //create a bundle object that will pass selected
         // row uri to detailFragment
         Bundle bundle = new Bundle();
+        Log.d("uri " , uri.toString());
         bundle.putParcelable(CONTACT_URI,uri);
         detailFragment.setArguments(bundle);
     }
