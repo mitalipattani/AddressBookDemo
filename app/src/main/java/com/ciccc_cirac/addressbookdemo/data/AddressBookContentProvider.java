@@ -39,7 +39,7 @@ public class AddressBookContentProvider  extends ContentProvider{
 
         //uri for contact table with specific #id value
         uriMatcher.addURI(DatabaseDescription.AUTHORITY,
-                DatabaseDescription.Contact.TABLE_NAME + " /#"
+                DatabaseDescription.Contact.TABLE_NAME + "/#"
                 ,ONE_CONTACT);
 
     }
@@ -69,7 +69,7 @@ public class AddressBookContentProvider  extends ContentProvider{
                 //contact with specific ID will be selcetd here
                 // add the ID value from URI to the QueryBuilder
                 queryBuilder.appendWhere
-                        ((DatabaseDescription.Contact._ID + " = "
+                        ((DatabaseDescription.Contact._ID + "="
                         + uri.getLastPathSegment()));
                 break;
             case CONTACTS : //all contacts will be selected
