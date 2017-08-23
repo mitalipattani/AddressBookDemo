@@ -29,6 +29,12 @@ import com.ciccc_cirac.addressbookdemo.data.DatabaseDescription;
 public class AddEditFragment extends Fragment
 implements LoaderManager.LoaderCallbacks<Cursor>
 {
+    //interface
+    public  interface AddEditFragmentInterface
+    {
+        void onAddEditComplete(Uri uri);
+    }
+    public AddEditFragmentInterface addEditFragmentInterface;
     //Every Loader needs a Unique ID
     //Integer constant for Loader
     private static final int CONTACT_LOADER = 0;
@@ -36,9 +42,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     private Uri contactUri;
     //contactUri value will come from MainActivity
 
-
-
-    //EditText for contact
+   //EditText for contact
 
     private TextInputLayout nameTextInput;
     private TextInputLayout phoneTextInput;
@@ -110,13 +114,24 @@ implements LoaderManager.LoaderCallbacks<Cursor>
                 getContentResolver()
                 .insert(DatabaseDescription.Contact.CONTENT_URI
                 ,contentValues);
-        Toast.makeText(getActivity(),"Data inserted Succesfully",
+        Toast.makeText(getActivity(),R.string.contact_added,
                 Toast.LENGTH_SHORT).show();
         //Change the Toast to SnackBar
         //SnackBar = notification feedback to the user
         // and you add actions to snackBar like undo, cancel, ok
+        addEditFragmentInterface.onAddEditComplete(newContactUri);
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        addEditFragmentInterface = (AddEditFragmentInterface)context;
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        addEditFragmentInterface = null;
     }
 
     @Override

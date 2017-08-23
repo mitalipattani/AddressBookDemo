@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity
+    implements ContactsFragment.ContactFragmentInterface,
+        AddEditFragment.AddEditFragmentInterface
 {
     private ContactsFragment contactsFragment;
     @Override
@@ -41,4 +43,14 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onAddContact() {
+        displayAddEditFragment(R.id.fragmentContainer,null);
+    }
+
+    @Override
+    public void onAddEditComplete(Uri uri) {
+        getSupportFragmentManager()
+                .popBackStack();
+    }
 }

@@ -1,5 +1,6 @@
 package com.ciccc_cirac.addressbookdemo;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,8 +24,16 @@ import com.ciccc_cirac.addressbookdemo.data.DatabaseDescription;
 public class ContactsFragment extends Fragment
 implements LoaderManager.LoaderCallbacks<Cursor>
 {
+    //interface .: have only methods no implementation
+    //Class implementing interface will have code
+    public interface ContactFragmentInterface
+    {
+        void onAddContact();
+    }
     private ContactAdapter contactAdapter;
     private int contact_loader =0;
+    //declaration not intialization
+    public ContactFragmentInterface contactFragmentInterface;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,8 +60,27 @@ implements LoaderManager.LoaderCallbacks<Cursor>
 
         FloatingActionButton addButton = (FloatingActionButton)
                 view.findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contactFragmentInterface.onAddContact();
+            }
+        });
         return  view;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        contactFragmentInterface = (ContactFragmentInterface) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        contactFragmentInterface = null;
+    }
+
     //Intialize the loader whenever the fragment
     // activity is created
 
