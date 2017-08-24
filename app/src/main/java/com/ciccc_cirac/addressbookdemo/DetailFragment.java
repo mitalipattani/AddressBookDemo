@@ -31,6 +31,16 @@ import com.ciccc_cirac.addressbookdemo.data.DatabaseDescription;
 public class DetailFragment extends Fragment
     implements LoaderManager.LoaderCallbacks<Cursor>
 {
+    //callback methods implemented by MainActivity
+
+    public interface  DetailFragmentInterface{
+        //2 methods for Edit & Delete
+        //pass uri of the selcetd contact for editing
+        void onEditContact(Uri uri);
+        void onContactDeleted();
+    }
+    //object for interface
+    public DetailFragmentInterface detailFragmentInterface;
     //create an ID for loader
     private static  final int CONTACT_LOADER =0;
     //uri of selected contact
@@ -78,7 +88,41 @@ public class DetailFragment extends Fragment
 
     }
 
+    //intialize the interface when fragment is attached
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        detailFragmentInterface = (DetailFragmentInterface)context;
+    }
+
+    //Destroyed when fragment is detach
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        detailFragmentInterface = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+      super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_details_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case  R.id.action_edit :
+                // it will ctake you to MainActivity
+                detailFragmentInterface.onEditContact(contactUri);
+                return  true;
+            case R.id.action_delete:
+               // deleteContact();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     //this method is called by Lodermanager to create a loader
     @Override

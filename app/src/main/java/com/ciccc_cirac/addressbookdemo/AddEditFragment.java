@@ -52,7 +52,8 @@ implements LoaderManager.LoaderCallbacks<Cursor>
     private TextInputLayout stateTextInput;
     private TextInputLayout zipTextInput;
     private FloatingActionButton saveContactFAB;
-
+    //check whether insert or update
+    private boolean addingNewContact = true ;
     //create a View for Fragment
 
 
@@ -83,6 +84,23 @@ implements LoaderManager.LoaderCallbacks<Cursor>
         saveContactFAB = (FloatingActionButton) view.findViewById(
                 R.id.saveFloatingActionButton);
         saveContactFAB.setOnClickListener(saveDataListner);
+        //will have selected contact Id if editing
+        //otherwise a null
+        Bundle argument = getArguments();
+        if(argument!= null)
+        {
+            addingNewContact = false;
+            contactUri = argument.getParcelable(MainActivity.CONTACT_URI);
+        }
+        //load the data fr selected contact from content provider
+        //database reading operation
+        if(contactUri != null)
+        {
+            getLoaderManager().initLoader(
+                    CONTACT_LOADER,
+                    null,
+                    this);
+        }
         return view;
     }
 
@@ -107,19 +125,55 @@ implements LoaderManager.LoaderCallbacks<Cursor>
                 phoneTextInput.getEditText().getText().toString());
         //Complete for all remaining column
 
-        // you need a URI
-        // this Uri is used yo call contentResolver
-        // insert the data into addressBook Content
-        Uri newContactUri = getActivity().
-                getContentResolver()
-                .insert(DatabaseDescription.Contact.CONTENT_URI
-                ,contentValues);
-        Toast.makeText(getActivity(),R.string.contact_added,
-                Toast.LENGTH_SHORT).show();
-        //Change the Toast to SnackBar
-        //SnackBar = notification feedback to the user
-        // and you add actions to snackBar like undo, cancel, ok
-        addEditFragmentInterface.onAddEditComplete(newContactUri);
+        if(addingNewContact) {
+            // you need a URI
+            // this Uri is used yo call contentResolver
+            // insert the data into addressBook Content
+            Uri newContactUri = getActivity().
+                    getContentResolver()
+                    .insert(DatabaseDescription.Contact.CONTENT_URI
+                            , contentValues);
+            Toast.makeText(getActivity(), R.string.contact_added,
+                    Toast.LENGTH_SHORT).show();
+            //Change the Toast to SnackBar
+            //SnackBar = notification feedback to the user
+            // and you add actions to snackBar like undo, cancel, ok
+            addEditFragmentInterface.onAddEditComplete(newContactUri);
+        }
+        else
+        {
+            //Use ContentResolvers' Update method
+            //int will returns the int
+            int updatedRows = getActivity()
+                    .getContentResolver()
+                    .update(
+                            contactUri,
+                            contentValues,
+                            null,
+                            null
+                    );
+            //success
+            if(updatedRows > 0)
+            {
+                Toast.makeText(
+                        getContext(),
+                        R.string.contact_updated,
+                        Toast.LENGTH_SHORT
+                ).show();
+                addEditFragmentInterface.
+                        onAddEditComplete(contactUri);
+                //onAddEdit() implemnetd in MainActivity
+            }
+            //failure
+            else
+            {
+                Toast.makeText(
+                        getContext(),
+                        R.string.contact_not_updated,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        }
     }
 
     @Override

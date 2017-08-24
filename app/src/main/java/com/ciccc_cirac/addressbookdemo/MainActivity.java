@@ -9,7 +9,8 @@ import android.util.Log;
 
 public class MainActivity extends AppCompatActivity
     implements ContactsFragment.ContactFragmentInterface,
-        AddEditFragment.AddEditFragmentInterface
+        AddEditFragment.AddEditFragmentInterface,
+        DetailFragment.DetailFragmentInterface
 {
     private ContactsFragment contactsFragment;
     public static final String CONTACT_URI = "contact_uri";
@@ -37,6 +38,13 @@ public class MainActivity extends AppCompatActivity
     {
         AddEditFragment addEditFragment =
                 new AddEditFragment();
+        if (contacturi!=null)
+        {
+           Bundle argument = new Bundle();
+            argument.putParcelable(CONTACT_URI,contacturi);
+            addEditFragment.setArguments(argument);
+
+        }
         // Create the fragment using FragmentTransaction
         FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager()
@@ -77,8 +85,17 @@ public class MainActivity extends AppCompatActivity
     public void onAddEditComplete(Uri uri) {
         getSupportFragmentManager()
                 .popBackStack();
+       // contactsFragment.updateContactList();
     }
 
 
+    @Override
+    public void onEditContact(Uri uri) {
+        displayAddEditFragment(R.id.fragmentContainer,uri);
+    }
 
+    @Override
+    public void onContactDeleted() {
+
+    }
 }
